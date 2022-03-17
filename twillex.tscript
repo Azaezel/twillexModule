@@ -425,20 +425,20 @@ function Twillex::parseStringArgs(%args, %validKeys, %object)
    // if we are tweening global variables, then keys may be things like $myClass::xyz.
    // we must hide the "::" so that it won't interfere with the use of colon between key and value
    %copy = strreplace(%args, "::", "++");
-   while (%copy !$= "") {
-      %copy = nextToken(%copy, $pair, ",");
-
-      // %pair should hold "key1:value1" or "key1:value1a value1b ..."
-      %value = nextToken($pair, $key, ":");
+ $Twillex::copy = strreplace(%args, "::", "++");
+   while ($Twillex::copy !$= "") {
+      $Twillex::copy = nextToken($Twillex::copy, "$Twillex::pair", ",");
+      // $Twillex::pair should hold "key1:value1" or "key1:value1a value1b ..."
+      %value = nextToken($Twillex::pair, "$Twillex::key", ":");
       // %value should hold "value1" or "value1a value1b ..."
       // %key should hold "key1"
-      if (trim($key) $= "" || trim(%value) $= "" || strpos(%value, ":") >= 0 ) {
-         error("Twillex::parseStringArgs: could not parse args '", %args, "' near '", $pair, "'");
+      if (trim($Twillex::key) $= "" || trim(%value) $= "" || strpos(%value, ":") >= 0 ) {
+         error("Twillex::parseStringArgs: could not parse args '", %args, "' near '", $Twillex::pair, "'");
          return "0";
       }
 
-      $key = trim(strreplace($key, "++", "::"));
-      %keys = %keys $= "" ? $key : %keys SPC $key;
+      $Twillex::key = trim(strreplace($Twillex::key, "++", "::"));
+      %keys = %keys $= "" ? $Twillex::key : %keys SPC $Twillex::key;
       %keyCount++;
    }
 
@@ -464,10 +464,10 @@ function Twillex::parseStringArgs(%args, %validKeys, %object)
    
    %copy = strreplace(%args, "::", "++");
    while (%copy !$= "") {
-      %copy = nextToken(%copy, $pair, ",");
-      %value = nextToken($pair, $key, ":");
+      %copy = nextToken(%copy, $Twillex::pair, ",");
+      %value = nextToken($Twillex::pair, $Twillex::key, ":");
 
-      %object.setFieldValue(trim(strreplace($key, "++", "::")), trim(%value));
+      %object.setFieldValue(trim(strreplace($Twillex::key, "++", "::")), trim(%value));
    }
    
    return %keys;
