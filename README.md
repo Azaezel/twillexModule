@@ -83,7 +83,7 @@ To create a Twillex engine requires set up, tear down, and frame updates.
 Setup and tear-down work as usual in Torque.
 First, include the script
 ```
-exec("<your_path>/Twillex.cs");
+exec("<your_path>/Twillex.tscript");
 ```
 
 Then, create a Twillex engine to run your tweens.
