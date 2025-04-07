@@ -1045,12 +1045,17 @@ function Tween::interpolateSpecialField(%this, %field, %ft)
 
       case "x":
          %value = %this.startValueX + %ft * %this.diffValueX;
-         %this.target.setPositionX(%value);
+         %this.target.position.X = %value;
          return true;
 
       case "y":
          %value = %this.startValueY + %ft * %this.diffValueY;
-         %this.target.setPositionY(%value);
+         %this.target.position.Y = %value;
+         return true;
+         
+      case "z":
+         %value = %this.startValueZ + %ft * %this.diffValueZ;
+         %this.target.position.Z = %value;
          return true;
 
       case "sx":
